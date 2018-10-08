@@ -1,6 +1,8 @@
 # Developing Microservices - Node, React, and Docker
 
-[![Build Status](https://travis-ci.org/mjhea0/microservice-movies.svg?branch=master)](https://travis-ci.org/mjhea0/microservice-movies)
+# Microservices with Docker, Flask, and React
+[![Build Status](https://travis-ci.org/dsroden/node-microservices.svg?bran
+ch=master)](https://travis-ci.org/dsroden/node-microservices)
 
 http://mherman.org/microservice-movies/
 
