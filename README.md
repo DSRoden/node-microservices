@@ -19,7 +19,7 @@ http://mherman.org/microservice-movies/
 | Functional Tests | Test    | n/a       | TestCafe             |
 
 
-## Want to learn how to build this project?
+## This project uses MHerman's movies-microservice project as starting point. Definitely check it out!
 
 Check out the [blog post](http://mherman.org/blog/2017/05/11/developing-microservices-node-react-docker/).
 
