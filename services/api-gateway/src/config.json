@@ -1,0 +1,4 @@
+{ 
+	"AUTH_SERVICE_URL" : "http://auth-service:3000/api/v1/auth",
+	"AUTH_SKIP_URL_PARAMS" : ["/users/login", "/users/register"]
+}

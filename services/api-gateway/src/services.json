@@ -1,0 +1,22 @@
+[
+  {
+    "name": "users-service",
+    "host": "users-service",
+    "port": "3000",
+    "protocol": "http",
+    "rootPath": "api/v1",
+    "middleware": [
+      "Authentication"
+    ]
+  },
+  {
+    "name": "movies-service",
+    "host": "movies-service",
+    "port": "3000",
+    "protocol": "http",
+    "rootPath": "api/v1",
+    "middleware": [
+      "Authentication"
+    ]
+  }
+]

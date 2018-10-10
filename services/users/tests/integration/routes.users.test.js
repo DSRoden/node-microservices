@@ -23,7 +23,7 @@ describe('routes : users', () => {
   describe('POST /users/register', () => {
     it('should register a new user', (done) => {
       chai.request(server)
-      .post('/users/register')
+      .post('/api/v1/users/register')
       .send({
         username: 'john',
         password: 'doe'
@@ -43,7 +43,7 @@ describe('routes : users', () => {
   describe('POST /users/login', () => {
     it('should login a user', (done) => {
       chai.request(server)
-      .post('/users/login')
+      .post('/api/v1/users/login')
       .send({
         username: 'michael',
         password: 'herman'
@@ -61,7 +61,7 @@ describe('routes : users', () => {
     });
     it('should not login an unregistered user', (done) => {
       chai.request(server)
-      .post('/users/login')
+      .post('/api/v1/users/login')
       .send({
         username: 'not',
         password: 'valid'
@@ -76,7 +76,7 @@ describe('routes : users', () => {
     });
     it('should not login a valid user with incorrect password', (done) => {
       chai.request(server)
-      .post('/users/login')
+      .post('/api/v1/users/login')
       .send({
         username: 'michael',
         password: 'incorrect'
@@ -94,7 +94,7 @@ describe('routes : users', () => {
   describe('GET /users/user', () => {
     it('should return a success', (done) => {
       chai.request(server)
-      .post('/users/login')
+      .post('/api/v1/users/login')
       .send({
         username: 'michael',
         password: 'herman'
@@ -102,8 +102,8 @@ describe('routes : users', () => {
       .end((error, response) => {
         should.not.exist(error);
         chai.request(server)
-        .get('/users/user')
-        .set('authorization', 'Bearer ' + response.body.token)
+        .get('/api/v1/users/user?user=1')
+        // .set('authorization', 'Bearer ' + response.body.token)
         .end((err, res) => {
           should.not.exist(err);
           res.status.should.eql(200);
@@ -117,7 +117,7 @@ describe('routes : users', () => {
     });
     it('should throw an error if a user is not logged in', (done) => {
       chai.request(server)
-      .get('/users/user')
+      .get('/api/v1/users/user')
       .end((err, res) => {
         should.exist(err);
         res.status.should.eql(400);

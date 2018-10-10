@@ -19,7 +19,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use('/users', routes);
+app.use('/api/v1/users', routes);
 
 app.use((req, res, next) => {
   const err = new Error('Not Found');

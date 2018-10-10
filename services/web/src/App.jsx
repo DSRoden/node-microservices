@@ -32,6 +32,30 @@ class App extends Component {
     this.saveMovie = this.saveMovie.bind(this)
     this.getMovies = this.getMovies.bind(this)
   }
+
+  componentDidMount(){
+    this.checkStatus()
+  }
+
+  checkStatus(){
+    if (!window.localStorage.getItem('authToken')){
+      return;
+    }
+    const options = {
+      url: 'http://localhost/api/users-service/users/user',
+      method: 'get',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${window.localStorage.authToken}`
+      }
+    };
+    return axios(options)
+    .then((res) => {
+      console.log('user authenticated', parseInt(res.data.user))
+    })
+    .catch((err) => { console.log(err); })
+  }
+
   searchMovie(term) {
     axios.get(`${API_URL}${term}`)
     .then((res) => { this.setState({ movies: res.data.Search }); })
@@ -62,10 +86,11 @@ class App extends Component {
       why? http://localhost:3000/users/register
       why not? http://users-service:3000/users/register
      */
-    return axios.post('http://localhost:3000/users/register', userData)
+    return axios.post('http://localhost/api/users-service/users/register', userData)
     .then((res) => {
+      console.log('user registered', res);
       window.localStorage.setItem('authToken', res.data.token)
-      window.localStorage.setItem('user', res.data.user)
+      window.localStorage.setItem('username', res.data.username)
       this.setState({ isAuthenticated: true })
       this.createFlashMessage('You successfully registered! Welcome!')
       this.props.history.push('/')
@@ -81,10 +106,11 @@ class App extends Component {
       why? http://localhost:3000/users/login
       why not? http://users-service:3000/users/login
      */
-    return axios.post('http://localhost:3000/users/login', userData)
+    return axios.post('http://localhost/api/users-service/users/login', userData)
     .then((res) => {
+      console.log('user logged in', res);
       window.localStorage.setItem('authToken', res.data.token)
-      window.localStorage.setItem('user', res.data.user)
+      window.localStorage.setItem('username', res.data.username)
       this.setState({ isAuthenticated: true })
       this.createFlashMessage('You successfully logged in! Welcome!')
       this.props.history.push('/')
@@ -106,7 +132,7 @@ class App extends Component {
   }
   saveMovie (movie) {
     const options = {
-      url: 'http://localhost:3001/movies',
+      url: 'http://localhost/api/movies-service/movies',
       method: 'post',
       data: {
         title: movie
@@ -122,7 +148,7 @@ class App extends Component {
   }
   getMovies() {
     const options = {
-      url: 'http://localhost:3001/movies/user',
+      url: 'http://localhost/api/movies-service/movies/user',
       method: 'get',
       headers: {
         'Content-Type': 'application/json',

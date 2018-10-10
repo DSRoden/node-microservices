@@ -1,20 +1,25 @@
 const express = require('express');
 
 const queries = require('../db/queries.js');
-const routeHelpers = require('./_helpers');
+// const routeHelpers = require('./_helpers');
 
 const router = express.Router();
 
 router.get('/ping', (req, res) => {
-  res.send('pong');
+  const response = {
+    message: 'pong',
+    query: req.query,
+    body: req.body,
+  };
+  res.send(response);
 });
 
 /*
 get movies by user
  */
 /* eslint-disable no-param-reassign */
-router.get('/user', routeHelpers.ensureAuthenticated, (req, res, next) => {
-  return queries.getSavedMovies(parseInt(req.user, 10))
+router.get('/user', (req, res, next) => {
+  return queries.getSavedMovies(parseInt(req.query.user, 10))
   .then((movies) => {
     res.json({
       status: 'success',
@@ -28,8 +33,7 @@ router.get('/user', routeHelpers.ensureAuthenticated, (req, res, next) => {
 /*
 add new movie
  */
-router.post('/', routeHelpers.ensureAuthenticated, (req, res, next) => {
-  req.body.user_id = req.user;
+router.post('/', (req, res, next) => {
   return queries.addMovie(req.body)
   .then(() => {
     res.json({

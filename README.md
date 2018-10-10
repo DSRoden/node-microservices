@@ -10,6 +10,9 @@ ch=master)](https://travis-ci.org/dsroden/node-microservices)
 | Name             | Service | Container | Tech                 |
 |------------------|---------|-----------|----------------------|
 | Web              | Web     | web       | React, React-Router  |
+| NGINX			   | Nginx   | nginx     | NGINX                |
+| Api-gateway	   | ''      | ''        | Node, Express        |
+| Authentication   | Auth    | auth      | Node, Express, JWT   |
 | Movies API       | Movies  | movies    | Node, Express        |
 | Movies DB        | Movies  | movies-db | Postgres             |
 | Swagger          | Movies  | swagger   | Swagger UI           |
@@ -67,38 +70,6 @@ With the apps up, run:
 $ sh init_db.sh
 ```
 
-#### Sanity Check
-
-Test out the following services...
-
-##### (1) Users - http://localhost:3000
-
-| Endpoint        | HTTP Method | CRUD Method | Result        |
-|-----------------|-------------|-------------|---------------|
-| /users/ping     | GET         | READ        | `pong`        |
-| /users/register | POST        | CREATE      | add a user    |
-| /users/login    | POST        | CREATE      | log in a user |
-| /users/user     | GET         | READ        | get user info |
-
-##### (2) Movies - http://localhost:3001
-
-| Endpoint      | HTTP Method | CRUD Method | Result                    |
-|---------------|-------------|-------------|---------------------------|
-| /movies/ping  | GET         | READ        | `pong`                    |
-| /movies/user  | GET         | READ        | get all movies by user    |
-| /movies       | POST        | CREATE      | add a single movie        |
-
-##### (3) Web - http://localhost:3007
-
-| Endpoint   | HTTP Method | CRUD Method | Result                  |
-|-------------|-------------|-------------|------------------------|
-| /           | GET         | READ        | render main page       |
-| /login      | GET         | READ        | render login page      |
-| /register   | GET         | READ        | render register page   |
-| /logout     | GET         | READ        | log a user out         |
-| /collection | GET         | READ        | render collection page |
-
-##### (4) Movies Database and (5) Users Database
 
 To access, get the container id from `docker ps` and then open `psql`:
 

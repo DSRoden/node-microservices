@@ -1,0 +1,3 @@
+{ 
+	"FETCH_USER_URL" : "http://users-service:3000/api/v1/users/user"
+}

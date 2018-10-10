@@ -24,6 +24,33 @@ services:
     healthcheck:
       test: exit 0
 
+  api-gateway:
+    container_name: api-gateway
+    build: ./services/api-gateway
+    volumes:
+      - './services/api-gateway:/usr/src/app'
+      - './services/api-gateway/package.json:/usr/src/package.json'
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=${NODE_ENV}
+    links:
+      - users-service
+      - movies-service
+      - auth-service
+
+  auth-service:
+    container_name: auth-service
+    build: ./services/auth/
+    volumes:
+      - './services/auth:/usr/src/app'
+      - './services/auth/package.json:/usr/src/package.json'
+    ports:
+      - '3000'
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - TOKEN_SECRET=changeme
+
   users-service:
     container_name: users-service
     build: ./services/users/
@@ -31,7 +58,7 @@ services:
       - './services/users:/usr/src/app'
       - './services/users/package.json:/usr/src/package.json'
     ports:
-      - '3000:3000' # expose ports - HOST:CONTAINER
+      - '3000' # expose ports - HOST:CONTAINER
     environment:
       - DATABASE_URL=postgres://postgres:postgres@users-db:5432/users_dev
       - DATABASE_TEST_URL=postgres://postgres:postgres@users-db:5432/users_test
@@ -42,7 +69,9 @@ services:
         condition: service_healthy
     links:
       - users-db
-
+    labels:
+      - api_route=http://users-service:3000
+  
   movies-service:
     container_name: movies-service
     build: ./services/movies/
@@ -50,7 +79,7 @@ services:
       - './services/movies:/usr/src/app'
       - './services/movies/package.json:/usr/src/package.json'
     ports:
-      - '3001:3000' # expose ports - HOST:CONTAINER
+      - '3000' # expose ports - HOST:CONTAINER
     environment:
       - DATABASE_URL=postgres://postgres:postgres@movies-db:5432/movies_dev
       - DATABASE_TEST_URL=postgres://postgres:postgres@movies-db:5432/movies_test
@@ -91,7 +120,7 @@ services:
       - './services/movies/swagger:/usr/src/app'
       - '/usr/src/app/node_modules'
     ports:
-      - '3003:3001' # expose ports - HOST:CONTAINER
+      - '3004:3001' # expose ports - HOST:CONTAINER
     environment:
       - NODE_ENV=${NODE_ENV}
     depends_on:
@@ -102,3 +131,16 @@ services:
     links:
       - users-service
       - movies-service
+
+  nginx:
+    build:
+      context: ./services/nginx
+      dockerfile: Dockerfile-dev
+    restart: always
+    ports:
+      - 80:80
+    depends_on:
+    - users-service
+    - movies-service
+    - web-service
+
