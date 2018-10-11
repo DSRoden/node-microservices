@@ -30,11 +30,11 @@ app.post('/api/v1/auth', (req, res) => {
   // pass original request to auth
   const originalRequest = req.body;
   return Auth.authenticate(originalRequest)
-  .then((result) => {
-    res.send(result).end();
-  }).catch((err) => {
-    res.status(401).json(err).end();
-  });
+    .then((result) => {
+      res.send(result).end();
+    }).catch((err) => {
+      res.status(401).json(err).end();
+    });
 });
 
 app.post('/api/v1/encode', (req, res) => {

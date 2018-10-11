@@ -5,7 +5,7 @@ function Auth() {}
 Auth.authenticate = (req) => {
   return new Promise((resolve, reject) => {
     if (!req.headers.authorization) {
-      return reject({ message: 'Not authorized' });
+      return reject(new Error('Invalid authorization'));
     }
 
     const header = req.headers.authorization.split(' ');
@@ -13,7 +13,7 @@ Auth.authenticate = (req) => {
 
     return TOKEN.decode(token).then((payload) => {
       if (!payload.sub) {
-        return reject({ message: 'Invalid authorization' });
+        return reject(new Error('Invalid authorization'));
       }
       const userId = payload.sub;
       const authData = {};

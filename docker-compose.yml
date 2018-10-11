@@ -24,33 +24,6 @@ services:
     healthcheck:
       test: exit 0
 
-  api-gateway:
-    container_name: api-gateway
-    build: ./services/api-gateway
-    volumes:
-      - './services/api-gateway:/usr/src/app'
-      - './services/api-gateway/package.json:/usr/src/package.json'
-    ports:
-      - '3000:3000'
-    environment:
-      - NODE_ENV=${NODE_ENV}
-    links:
-      - users-service
-      - movies-service
-      - auth-service
-
-  auth-service:
-    container_name: auth-service
-    build: ./services/auth/
-    volumes:
-      - './services/auth:/usr/src/app'
-      - './services/auth/package.json:/usr/src/package.json'
-    ports:
-      - '3000'
-    environment:
-      - NODE_ENV=${NODE_ENV}
-      - TOKEN_SECRET=changeme
-
   users-service:
     container_name: users-service
     build: ./services/users/
@@ -93,26 +66,9 @@ services:
     links:
       - movies-db
       - users-service
-
-  web-service:
-    container_name: web-service
-    build: ./services/web/
-    volumes:
-      - './services/web:/usr/src/app'
-      - '/usr/src/app/node_modules'
-    ports:
-      - '3007:3006' # expose ports - HOST:CONTAINER
-    environment:
-      - NODE_ENV=${NODE_ENV}
-    depends_on:
-      users-service:
-        condition: service_started
-      movies-service:
-        condition: service_started
-    links:
-      - users-service
-      - movies-service
-
+    healthcheck:
+      test: exit 0
+      
   swagger:
     container_name: swagger
     build: ./services/movies/swagger/
@@ -132,6 +88,48 @@ services:
       - users-service
       - movies-service
 
+  auth-service:
+    container_name: auth-service
+    build: ./services/auth/
+    volumes:
+      - './services/auth:/usr/src/app'
+      - './services/auth/package.json:/usr/src/package.json'
+    ports:
+      - '3000'
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - TOKEN_SECRET=changeme
+
+
+  api-gateway:
+    container_name: api-gateway
+    build: ./services/api-gateway
+    volumes:
+      - './services/api-gateway:/usr/src/app'
+      - './services/api-gateway/package.json:/usr/src/package.json'
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=${NODE_ENV}
+    links:
+      - users-service
+      - movies-service
+      - auth-service
+
+  web-service:
+    container_name: web-service
+    build: ./services/web/
+    volumes:
+      - './services/web:/usr/src/app'
+      - '/usr/src/app/node_modules'
+    ports:
+      - '3007:3006' # expose ports - HOST:CONTAINER
+    environment:
+      - NODE_ENV=${NODE_ENV}
+    links:
+      - users-service
+      - movies-service
+
   nginx:
     build:
       context: ./services/nginx
@@ -139,8 +137,4 @@ services:
     restart: always
     ports:
       - 80:80
-    depends_on:
-    - users-service
-    - movies-service
-    - web-service
 

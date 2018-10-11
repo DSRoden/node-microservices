@@ -24,5 +24,5 @@ gulp.task('lint', () => (
 /*
 default
  */
-
-gulp.task('default', ['start', 'lint']);
+var build = gulp.series(gulp.parallel('start', 'lint'))
+gulp.task('default', build)

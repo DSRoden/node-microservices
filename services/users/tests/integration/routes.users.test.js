@@ -67,7 +67,8 @@ describe('routes : users', () => {
         password: 'valid'
       })
       .end((err, res) => {
-        should.exist(err);
+        // console.log('IN TESTS RES', res);
+        should.exist(res.error);
         res.status.should.eql(500);
         res.type.should.eql('application/json');
         res.body.status.should.eql('error');
@@ -82,7 +83,7 @@ describe('routes : users', () => {
         password: 'incorrect'
       })
       .end((err, res) => {
-        should.exist(err);
+        should.exist(res.error);
         res.status.should.eql(500);
         res.type.should.eql('application/json');
         res.body.status.should.eql('error');
@@ -119,7 +120,7 @@ describe('routes : users', () => {
       chai.request(server)
       .get('/api/v1/users/user')
       .end((err, res) => {
-        should.exist(err);
+        should.exist(res.error);
         res.status.should.eql(400);
         res.type.should.eql('application/json');
         res.body.status.should.eql('Please log in');

@@ -16,15 +16,15 @@ module.exports = (req, res, next) => {
     },
   };
   return request(authOptions)
-  .then((authData) => {
-    req.body = authData.body;
-    req.query = authData.query;
-    if (req.method === 'GET') {
-      req.originalUrl = `${req.originalUrl}?user=${req.query.user_id}`;
-    }
-    return next();
-  })
-  .catch((err) => {
-    return next(err);
-  });
+    .then((authData) => {
+      req.body = authData.body;
+      req.query = authData.query;
+      if (req.method === 'GET') {
+        req.originalUrl = `${req.originalUrl}?user=${req.query.user_id}`;
+      }
+      return next();
+    })
+    .catch(() => {
+      return res.redirect('http://localhost/error');
+    });
 };

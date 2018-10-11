@@ -1,11 +1,7 @@
 import React, {Component} from 'react'
 import { Route, Redirect, Switch, Link } from 'react-router-dom'
 import axios from 'axios'
-
-const API_URL = 'http://www.omdbapi.com/?apikey=fb46a742&s=';
-
-import './App.css';
-
+// import './App.css';
 import SearchBar from './components/SearchBar';
 import MovieList from './components/MovieList';
 import LoginForm from './components/LoginForm';
@@ -13,6 +9,8 @@ import RegisterForm from './components/RegisterForm';
 import FlashMessages from './components/FlashMessages';
 import NotFound from './components/NotFound';
 import SavedMovies from './components/SavedMovies';
+
+const API_URL = 'http://www.omdbapi.com/?apikey=fb46a742&s=';
 
 class App extends Component {
   constructor (props) {
@@ -175,7 +173,7 @@ class App extends Component {
             ? <div className="container text-center">
                 <h1>OMDB Movie Search</h1>
                 <SearchBar searchMovie={this.searchMovie.bind(this)} />
-                <a href="" onClick={this.logoutUser}>Logout</a>&nbsp;&#124;&nbsp;<Link to='/collection'>Collection</Link>
+                <a href="/" onClick={this.logoutUser}>Logout</a>&nbsp;&#124;&nbsp;<Link to='/collection'>Collection</Link>
                 <br/><br/><br/>
                 <MovieList
                   movies={this.state.movies}
@@ -208,6 +206,9 @@ class App extends Component {
               createFlashMessage={this.createFlashMessage}
               saved={this.state.saved} />
             : <Redirect to={{ pathname: '/login' }} />
+          )} />
+          <Route path='/error' render={() => (
+            <div> error </div>
           )} />
           <Route component={NotFound} />
         </Switch>

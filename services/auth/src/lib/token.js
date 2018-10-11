@@ -16,21 +16,20 @@ function decode(token) {
     const now = moment().unix();
     // check if the token has expired
     if (now > payload.exp) {
-      reject({ status: 'Token has expired.' });
+      reject(new Error('Token has expired.'));
     } else {
       resolve(payload);
     }
   })
-  .then((payload) => {
-    return payload;
-  })
-  .catch((err) => {
-    return err;
-  });
+    .then((payload) => {
+      return payload;
+    })
+    .catch((err) => {
+      return err;
+    });
 }
 
 module.exports = {
   encode,
   decode,
 };
-

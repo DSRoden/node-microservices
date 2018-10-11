@@ -1,9 +1,10 @@
-const app = require('./app');
 const debug = require('debug')('server:server');
 const http = require('http');
+const app = require('./app');
 
 function normalizePort(val) {
   const port = parseInt(val, 10);
+  // eslint-disable-next-line no-restricted-globals
   if (isNaN(port)) { return val; }
   if (port >= 0) { return port; }
   return false;

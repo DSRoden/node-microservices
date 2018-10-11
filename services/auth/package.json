@@ -1,30 +1,27 @@
 {
-  "name": "hello-word-api",
-  "version": "0.0.0",
-  "private": true,
   "scripts": {
     "start": "gulp --gulpfile app/gulpfile.js",
     "test": "./node_modules/mocha/bin/_mocha 'app/tests/**/*.test.js'"
   },
   "dependencies": {
-    "body-parser": "~1.15.2",
-    "debug": "~2.2.0",
-    "express": "~4.14.0",
+    "body-parser": "^1.18.3",
+    "debug": "^4.1.0",
+    "express": "^4.16.4",
     "jwt-simple": "^0.5.0",
     "moment": "^2.15.2",
-    "morgan": "~1.7.0",
+    "morgan": "^1.9.1",
     "request": "^2.81.0",
     "request-promise": "^4.2.0"
   },
   "devDependencies": {
-    "chai": "^3.5.0",
-    "chai-http": "^3.0.0",
-    "eslint": "^3.18.0",
-    "eslint-config-airbnb-base": "^11.1.1",
-    "eslint-plugin-import": "^2.2.0",
-    "gulp": "^3.9.1",
-    "gulp-eslint": "^3.0.1",
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.0",
+    "eslint": "^5.6.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "gulp-eslint": "^5.0.0",
     "gulp-nodemon": "^2.2.1",
-    "mocha": "^3.2.0"
+    "gulp": "^4.0.0",
+    "mocha": "^5.2.0"
   }
 }

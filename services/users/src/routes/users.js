@@ -50,9 +50,10 @@ router.post('/register', (req, res) => {
       username,
     });
   })
-  .catch(() => {
+  .catch((err) => {
     res.status(500).json({
       status: 'error',
+      messsage: err,
     });
   });
 });
@@ -78,7 +79,6 @@ router.post('/login', (req, res) => {
         'Content-Type': 'application/json',
       },
     };
-
     return new Promise((resolve, reject) => {
       request(options)
       .then((authResponse) => {
@@ -100,7 +100,7 @@ router.post('/login', (req, res) => {
   .catch((err) => {
     res.status(500).json({
       status: 'error',
-      message: err,
+      messsage: err,
     });
   });
 });

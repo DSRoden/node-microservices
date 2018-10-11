@@ -30,11 +30,11 @@ app.get('/api', (req, res) => {
 
 // Bootstrap services
 for (let i = 0; i < services.length; i += 1) {
-  const name = services[i].name;
-  const host = services[i].host;
-  const port = services[i].port;
-  const rootPath = services[i].rootPath || '';
-  const protocol = services[i].protocol || 'http';
+  const { name } = services[i];
+  const { host } = services[i];
+  const { port } = services[i];
+  const { rootPath } = services[i];
+  const { protocol } = services[i];
 
   // console.log(`Boostrapping service: ${protocol}://${host}:${port}/${rootPath}`);
   let middleware = [];
@@ -47,7 +47,7 @@ for (let i = 0; i < services.length; i += 1) {
   middleware.push(restreamer());
   app.use(`/api/${name}*`, middleware, (req, res, next) => {
     const urlParts = url.parse(req.originalUrl, true);
-    const query = urlParts.query;
+    const { query } = urlParts;
     let newPath = url.parse(req.originalUrl).pathname.replace(`/api/${name}`, rootPath);
 
     if (query.user) {
