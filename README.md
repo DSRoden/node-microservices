@@ -1,6 +1,5 @@
 # Developing Microservices - Node, React, and Docker
 
-# Microservices with Docker, Flask, and React
 [![Build Status](https://travis-ci.org/dsroden/node-microservices.svg?bran
 ch=master)](https://travis-ci.org/dsroden/node-microservices)
 
