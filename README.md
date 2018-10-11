@@ -1,7 +1,7 @@
 # Developing Microservices - Node, React, and Docker
 
-[![Build Status](https://travis-ci.org/dsroden/node-microservices.svg?bran
-ch=master)](https://travis-ci.org/dsroden/node-microservices)
+[![Build Status](https://travis-ci.org/DSRoden/node-microservices.svg?bran
+ch=master)](https://travis-ci.org/DSRoden/node-microservices)
 
 
 ## Architecture
