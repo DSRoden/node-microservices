@@ -49,6 +49,8 @@ class App extends Component {
     };
     return axios(options)
     .then((res) => {
+      this.setState({ isAuthenticated: true })
+      this.props.history.push('/')
       console.log('user authenticated', parseInt(res.data.user))
     })
     .catch((err) => { console.log(err); })
